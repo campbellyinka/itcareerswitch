@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Table</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body>
+
+    <main>
+
+    <h2>API Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>API Name</th>
+                <th>API Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Example API 1</td>
+                <td>
+                    
+                    <input type="text" id="param1-api1" name="desc1">
+                </td>
+                <td>
+                    <button onclick="callApi('api1')">Submit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Example API 2</td>
+                <td>
+                    
+                    <input type="text" id="param1-api2" name="desc2">
+                    <br>
+                </td>
+                <td>
+                    <button onclick="callApi('api2')">Submit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Example API 3</td>
+                <td>
+                   
+                    <input type="text" id="param1-api3" name="desc3">
+                    <br>
+                </td>
+                <td>
+                    <button onclick="callApi('api2')">Submit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="result" class="result">
+        <h3>Results</h3>
+        <pre id="result-output"></pre>
+    </div>
+
+    <script>
+        function callApi(api) {
+            let param1 = $(`#param1-${api}`).val();
+            let param2 = $(`#param2-${api}`).val();
+
+            $.ajax({
+                url: 'execute_curl.php',
+                type: 'POST',
+                data: {
+                    api: api,
+                    param1: param1,
+                    param2: param2
+                },
+                success: function(response) {
+                    $('#result-output').text(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#result-output').text('Error: ' + error);
+                }
+            });
+        }
+    </script>
+
+    </main>
+
+</body>
+
+</html>
